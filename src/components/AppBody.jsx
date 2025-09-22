@@ -1,6 +1,6 @@
 import InputBody from './InputBody'
 import React from 'react'
-import { getInitialData } from '../utils/index'
+import { getInitialData, showFormattedDate } from '../utils/index'
 import ItemList from '../components/ItemList'
 
 class AppBody extends React.Component {
@@ -21,6 +21,7 @@ class AppBody extends React.Component {
                         id: +new Date(),
                         title,
                         body, 
+                        createdAt: showFormattedDate(new Date())
                     }
                 ]
             }

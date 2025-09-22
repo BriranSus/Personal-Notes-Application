@@ -1,7 +1,9 @@
+import { showFormattedDate } from '../utils/index'
+
 function ItemNoteDate({ createdAt }){
     return (
         <div className="note-item__date">
-            <p>{createdAt}</p>
+            <p>{showFormattedDate(createdAt)}</p>
         </div>
     )
 }
