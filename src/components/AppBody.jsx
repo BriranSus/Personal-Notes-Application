@@ -49,8 +49,11 @@ class AppBody extends React.Component {
     }
 
     render() {
-        const notesList = this.state.items.filter((item) => !item.archived)
-        const notesArchived = this.state.items.filter((item) => item.archived)
+        const { items } = this.state;
+        const { search } = this.props;
+
+        const notesList = items.filter((item) => !item.archived).filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+        const notesArchived = items.filter((item) => item.archived).filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
         return (
             <div className='note-app__body'>
                 <h2>Buat Catatan</h2>
@@ -58,7 +61,7 @@ class AppBody extends React.Component {
                 <h2>Catatan Aktif</h2>
                 <ItemList items={notesList} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler}/>
                 <h2>Arsip</h2>
-                <ArchiveList items={notesArchived} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} archived={item.archived}/>
+                <ArchiveList items={notesArchived} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} archived={items.archived}/>
             </div>
         )
         
