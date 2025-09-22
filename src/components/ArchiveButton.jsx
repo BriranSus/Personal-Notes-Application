@@ -1,11 +1,13 @@
-function ArchiveButton({ id, onArchive }) {
+function ArchiveButton({ id, onArchive, archived }) {
     return (
         <button 
             className="note-item__archive-button" 
             onClick={() => {
                 onArchive(id)
         }}>
-            Archive
+            {
+                !archived ? "Archive" : "Pisahkan"
+            }
         </button>
     )
 }

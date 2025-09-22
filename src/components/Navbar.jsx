@@ -1,5 +1,3 @@
-import Search from '../assets/search.png'
-
 function Navbar() {
     return (
         <>

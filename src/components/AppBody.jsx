@@ -13,6 +13,7 @@ class AppBody extends React.Component {
 
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
+        this.onArchiveHandler = this.onArchiveHandler.bind(this);
     }
 
     onAddNoteHandler({ title, body }){
@@ -24,6 +25,7 @@ class AppBody extends React.Component {
                         title,
                         body, 
                         createdAt: showFormattedDate(new Date()),
+                        archived: false,
                     }
                 ]
             }
@@ -35,15 +37,28 @@ class AppBody extends React.Component {
         this.setState({ items })
     }
 
+    onArchiveHandler(id){
+        this.setState((prevState) => {
+            return {
+                items: prevState.items.map((note) => 
+                    note.id === id ? { ...note, archived: !note.archived } : note
+                )    
+            }
+            
+        })
+    }
+
     render() {
+        const notesList = this.state.items.filter((item) => !item.archived)
+        const notesArchived = this.state.items.filter((item) => item.archived)
         return (
             <div className='note-app__body'>
                 <h2>Buat Catatan</h2>
                 <InputBody addNote={this.onAddNoteHandler}></InputBody>
                 <h2>Catatan Aktif</h2>
-                <ItemList items={this.state.items} onDelete={this.onDeleteHandler}/>
+                <ItemList items={notesList} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler}/>
                 <h2>Arsip</h2>
-                <ArchiveList/>
+                <ArchiveList items={notesArchived} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} archived={item.archived}/>
             </div>
         )
         
