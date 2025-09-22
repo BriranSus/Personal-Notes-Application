@@ -1,7 +1,8 @@
 import InputBody from './InputBody'
 import React from 'react'
 import { getInitialData, showFormattedDate } from '../utils/index'
-import ItemList from '../components/ItemList'
+import ItemList from './ItemList'
+import ArchiveList from './ArchiveList'
 
 class AppBody extends React.Component {
     constructor(props){
@@ -11,6 +12,7 @@ class AppBody extends React.Component {
         }
 
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
+        this.onDeleteHandler = this.onDeleteHandler.bind(this);
     }
 
     onAddNoteHandler({ title, body }){
@@ -21,11 +23,16 @@ class AppBody extends React.Component {
                         id: +new Date(),
                         title,
                         body, 
-                        createdAt: showFormattedDate(new Date())
+                        createdAt: showFormattedDate(new Date()),
                     }
                 ]
             }
         })
+    }
+
+    onDeleteHandler(id){
+        const items = this.state.items.filter(item => item.id !== id);
+        this.setState({ items })
     }
 
     render() {
@@ -34,7 +41,9 @@ class AppBody extends React.Component {
                 <h2>Buat Catatan</h2>
                 <InputBody addNote={this.onAddNoteHandler}></InputBody>
                 <h2>Catatan Aktif</h2>
-                <ItemList items={this.state.items}/>
+                <ItemList items={this.state.items} onDelete={this.onDeleteHandler}/>
+                <h2>Arsip</h2>
+                <ArchiveList/>
             </div>
         )
         
